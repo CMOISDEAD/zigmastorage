@@ -1,16 +1,31 @@
-// local JSON database on localStorage.
-// save/update/delete content.
-//
-
-// save a value in to the localStorage
-const save = (key: string, value: any): boolean => {
+// save an item in to localStorage
+const save = (key: string, value: any) => {
   const content = JSON.stringify(value);
   window.localStorage.setItem(key, content);
-  return true;
+  return value;
 };
 
-// get a value from the localStorage
+// return an item from localStorage
 const get = (key: string) => {
-  const value = window.localStorage.getItem(key) || "";
+  const value = window.localStorage.getItem(key);
+  if (!value) throw new Error("no item with that name");
   return JSON.parse(value);
+};
+
+// remove an item from localStorage
+const remove = (key: string) => {
+  if (!window.localStorage.getItem(key)) throw new Error("item dont exist");
+  window.localStorage.removeItem(key);
+};
+
+// remove all items from localStorage
+const clear = () => {
+  window.localStorage.clear();
+};
+
+export default {
+  get,
+  save,
+  remove,
+  clear,
 };
